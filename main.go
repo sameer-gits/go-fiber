@@ -1,0 +1,26 @@
+package main
+
+import (
+    "log"
+
+    "github.com/gofiber/fiber/v2"
+    "github.com/gofiber/template/html/v2"
+)
+
+func main() {
+
+    engine := html.New("./static", ".html")
+
+    app := fiber.New(fiber.Config{
+        Views: engine,
+    })
+
+    app.Static("/", "./public")
+
+    app.Get("/", func(c *fiber.Ctx) error {
+
+        return c.Render("index", fiber.Map{})})
+
+        log.Fatal(app.Listen(":3000"))
+
+    }
